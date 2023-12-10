@@ -1,49 +1,50 @@
-<a href="https://totaltypescript.com/tutorials/beginners-typescript"><img src="https://res.cloudinary.com/total-typescript/image/upload/v1664461034/beginners-typescript-tutorial/github_2x_himnyi.png" alt="beginner typescript tutorial" /></a>
+# Typescript Labs
 
-## Quickstart
+## Lab 11: Assigning Dynamic Keys to an Object
 
-Take the course on [Total TypeScript](https://totaltypescript.com/tutorials/beginners-typescript). There, you'll find:
+file: `/src/11-record.problem.ts`
 
-- Video explanations for each problem and solution
-- Transcripts
-- Text explanations
-- A built-in Stackblitz editor
+Consider this `createCache` function:
 
-```sh
-# Installs all dependencies
-npm install
+```ts
+const createCache = () => {
+  const cache = {};
 
-# Asks you which exercise you'd like to run, and runs it
-npm run exercise
+  const add = (id: string, value: string) => {
+    cache[id] = value;
+  };
+
+  const remove = (id: string) => {
+    delete cache[id];
+  };
+
+  return {
+    cache,
+    add,
+    remove,
+  };
+};
 ```
 
-## How to take the course
+We've got an empty object that we're calling cache, and we're allowing users to specify add and remove on it.
 
-You'll notice that the course is split into exercises. Each exercise is split into a `*.problem` and a `*.solution`.
+Inside the tests we have some errors:
 
-To take an exercise:
+```ts
+    expect(cache.cache["123"]).toEqual("Matt")
+```
 
-1. Run `npm run exercise`
-2. Choose which exercise you'd like to run.
+Hovering over the errors makes it look like cache has been typed as an empty object.
 
-This course encourages **active, exploratory learning**. In the video, I'll explain a problem, and **you'll be asked to try to find a solution**. To attempt a solution, you'll need to:
+There are also errors in the `createCache` function:
 
-1. Check out [TypeScript's docs](https://www.typescriptlang.org/docs/handbook/intro.html).
-1. Try to find something that looks relevant.
-1. Give it a go to see if it solves the problem.
+```bsh
+Expression of type 'string' can't be used to index type '{}'
+```
 
-You'll know if you've succeeded because the tests will pass.
+There is no indexing happening with our current code..
 
-**If you succeed**, or **if you get stuck**, unpause the video and check out the `*.solution`. You can see if your solution is better or worse than mine!
+Challenge
+Your challenge is to reference the TypeScript docs and work out what could be causing this problem.
 
-## Acknowledgements
-
-Say thanks to Matt on [Twitter](https://twitter.com/mattpocockuk) or by joining his [Discord](https://discord.gg/8S5ujhfTB3). Consider signing up to his [Total TypeScript course](https://totaltypescript.com).
-
-## Reference
-
-### `npm run exercise`
-
-Alias: `npm run e`
-
-Open a prompt for choosing which exercise you'd like to run.
+Update cache to be typed properly so the errors go away.
